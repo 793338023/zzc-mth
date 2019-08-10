@@ -1,0 +1,48 @@
+{
+  "name": "zzc-mth",
+  "version": "1.0.2",
+  "description": "markdown转为html工具",
+  "main": "index.js",
+  "bin": {
+    "zzc-mth": "./bin/index.js"
+  },
+  "scripts": {
+    "p": "npm publish .",
+    "v1": "npm version patch",
+    "v2": "npm version minor",
+    "v3": "npm version major",
+    "zzc-mth": "zzc-mth run default"
+  },
+  "files": [
+    "bin",
+    "css",
+    "themes",
+    "util",
+    "gulpfile.js"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "zzc-mth": "^1.0.2"
+  },
+  "dependencies": {
+    "colorful": "^2.1.0",
+    "commander": "^3.0.0",
+    "gulp": "^4.0.2",
+    "gulp-inject": "^5.0.4",
+    "gulp-markdown": "^4.0.0",
+    "markdown2html-pro": "^1.0.5",
+    "merge2": "^1.2.4",
+    "rimraf": "^2.6.3",
+    "through2": "^3.0.1"
+  },
+  "customParams": {
+    "theme": "markdown",
+    "packageDir": "dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:793338023/zzc-mth.git"
+  }
+}

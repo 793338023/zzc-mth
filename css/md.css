@@ -1,0 +1,20 @@
+.body {
+  display: flex;
+  width: 80%;
+  min-width: 800px;
+  max-width: none;
+}
+.content {
+  flex: 1;
+}
+.nav-bar {
+}
+.nav-bar ul {
+  margin-top: 0;
+}
+.nav-bar > ul {
+  display: block;
+  position: sticky;
+  top: 0;
+  margin-top: 150px;
+}
