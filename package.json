@@ -1,6 +1,6 @@
 {
   "name": "zzc-mth",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "markdown转为html工具",
   "main": "index.js",
   "bin": {
@@ -20,7 +20,12 @@
     "util",
     "gulpfile.js"
   ],
-  "keywords": [],
+  "keywords": [
+    "gulp",
+    "markdown转为html",
+    "markdown to html",
+    "marked"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
