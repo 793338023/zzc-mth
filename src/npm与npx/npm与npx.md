@@ -1,8 +1,4 @@
----
-title: npm、nrm与npx
-date: 2019-08-16 23:27:57
-tags: npm
----
+# npm、nrm 与 npx
 
 ## 前言
 
@@ -144,8 +140,11 @@ package-lock 其主要字段是 version, resolved, integrity, requires, dependen
 version, integrity, resolved 用来记录包的准确版本号、内容 hash、安装源的，决定了要安装的包的准确“身份”信息。
 
 从 dependencies: {} 里的内容我们会发现，整个文件的 JSON 配置里的 dependencies 层次结构与文件系统中 node_modules 的文件夹层次结构是完全对照的，除最外层的 requires 属性为 true 以外, 其他层的 requires 属性都对应着这个包的 package.json 里记录的自己的依赖项 dependencies 属性，而 dependencies 对应既这个包里 node_modules 所拥有的文件。
+
 如图:
+
 ![node](npm与npx/node_module.png)
+
 因为这个文件记录了 node_modules 里所有包的结构、层级和版本号甚至安装源，它也就事实上提供了 “保存” node_modules 状态的能力。只要有这样一个 lock 文件，不管在那一台机器上执行 npm install 都会得到完全相同的 node_modules 结果。
 
 package-lock 文件致力于优化的场景:

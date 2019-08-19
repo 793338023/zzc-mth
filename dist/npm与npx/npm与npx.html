@@ -5,112 +5,117 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title>npm与npx</title>
-      <!-- inject:FileContent:css --><style>html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      <!-- inject:FileContent:css --><style>@charset "utf-8";
 
-body{
-color:#444;
-font-family:Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
-font-size:12px;
-line-height:1.5em;
+/**
+ * markdown.css
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://gnu.org/licenses/lgpl.txt.
+ *
+ * @project      Weblog and Open Source Projects of Florian Wolters
+ * @version      GIT: $Id$
+ * @package      xhtml-css
+ * @author       Florian Wolters <florian.wolters.85@googlemail.com>
+ * @copyright    2012 Florian Wolters
+ * @cssdoc       version 1.0-pre
+ * @license      http://gnu.org/licenses/lgpl.txt GNU Lesser General Public License
+ * @link         http://github.com/FlorianWolters/jekyll-bootstrap-theme
+ * @media        all
+ * @valid        true
+ */
+
+body {
+    font-family: Helvetica, Arial, Freesans, clean, sans-serif;
 padding:1em;
 margin:auto;
 max-width:42em;
 background:#fefefe;
 }
 
-a{ color: #0645ad; text-decoration:none;}
-a:visited{ color: #0b0080; }
-a:hover{ color: #06e; }
-a:active{ color:#faa700; }
-a:focus{ outline: thin dotted; }
-a:hover, a:active{ outline: 0; }
-
-::-moz-selection{background:rgba(255,255,0,0.3);color:#000}
-::selection{background:rgba(255,255,0,0.3);color:#000}
-
-a::-moz-selection{background:rgba(255,255,0,0.3);color:#0645ad}
-a::selection{background:rgba(255,255,0,0.3);color:#0645ad}
-
-p{
-margin:1em 0;
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
 }
 
-img{
-max-width:100%;
+h1 {
+    color: #000000;
+    font-size: 28px;
 }
 
-h1,h2,h3,h4,h5,h6{
-font-weight:normal;
-color:#111;
-line-height:1em;
-}
-h4,h5,h6{ font-weight: bold; }
-h1{ font-size:2.5em; }
-h2{ font-size:2em; }
-h3{ font-size:1.5em; }
-h4{ font-size:1.2em; }
-h5{ font-size:1em; }
-h6{ font-size:0.9em; }
-
-blockquote{
-color:#666666;
-margin:0;
-padding-left: 3em;
-border-left: 0.5em #EEE solid;
-}
-hr { display: block; height: 2px; border: 0; border-top: 1px solid #aaa;border-bottom: 1px solid #eee; margin: 1em 0; padding: 0; }
-pre, code, kbd, samp { color: #000; font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 0.98em; }
-pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
-
-b, strong { font-weight: bold; }
-
-dfn { font-style: italic; }
-
-ins { background: #ff9; color: #000; text-decoration: none; }
-
-mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
-
-sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
-sup { top: -0.5em; }
-sub { bottom: -0.25em; }
-
-ul, ol { margin: 1em 0; padding: 0 0 0 2em; }
-li p:last-child { margin:0 }
-dd { margin: 0 0 0 2em; }
-
-img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
-
-table {
-border-collapse: collapse;
-border-spacing: 0;
-width: 100%;
-}
-th { border-bottom: 1px solid black; }
-td { vertical-align: top; }
-
-@media only screen and (min-width: 480px) {
-body{font-size:14px;}
+h2 {
+    border-bottom: 1px solid #CCCCCC;
+    color: #000000;
+    font-size: 24px;
 }
 
-@media only screen and (min-width: 768px) {
-body{font-size:16px;}
+h3 {
+    font-size: 18px;
 }
 
-@media print {
-  * { background: transparent !important; color: black !important; filter:none !important; -ms-filter: none !important; }
-  body{font-size:12pt; max-width:100%;}
-  a, a:visited { text-decoration: underline; }
-  hr { height: 1px; border:0; border-bottom:1px solid black; }
-  a[href]:after { content: " (" attr(href) ")"; }
-  abbr[title]:after { content: " (" attr(title) ")"; }
-  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
-  pre, blockquote { border: 1px solid #999; padding-right: 1em; page-break-inside: avoid; }
-  tr, img { page-break-inside: avoid; }
-  img { max-width: 100% !important; }
-  @page :left { margin: 15mm 20mm 15mm 10mm; }
-  @page :right { margin: 15mm 10mm 15mm 20mm; }
-  p, h2, h3 { orphans: 3; widows: 3; }
-  h2, h3 { page-break-after: avoid; }
+h4 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
+h6 {
+    color: #777777;
+    background-color: inherit;
+    font-size: 14px;
+}
+
+hr {
+    height: 0.2em;
+    border: 0;
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+}
+
+p, blockquote, ul, ol, dl, li, table, pre {
+    margin: 15px 0;
+}
+
+code, pre {
+    border-radius: 3px;
+    background-color: #F8F8F8;
+    color: inherit;
+}
+
+code {
+    border: 1px solid #EAEAEA;
+    margin: 0 2px;
+    padding: 0 5px;
+}
+
+pre {
+    border: 1px solid #CCCCCC;
+    line-height: 1.25em;
+    overflow: auto;
+    padding: 6px 10px;
+}
+
+pre > code {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+a, a:visited {
+    color: #4183C4;
+    background-color: inherit;
+    text-decoration: none;
 }
 </style><style>.body {
   display: flex;
@@ -157,10 +162,7 @@ body{font-size:16px;}
     </head>
     <body class="body">
     <div class="content">
-      <hr>
-<p>title: npm、nrm与npx
-date: 2019-08-16 23:27:57</p>
-<a id=#toc21 class="anchor-fix"></a><h2>tags: npm</h2>
+      <a id=#toc11 class="anchor-fix"></a><h1>npm、nrm 与 npx</h1>
 <a id=#toc22 class="anchor-fix"></a><h2>前言</h2>
 <p>NPM 是随同 NodeJS 一起安装的包管理工具，能解决 NodeJS 代码部署上的很多问题，如允许用户从 NPM 服务器下载别人编写的第三方包到本地使用、允许用户从 NPM 服务器下载并安装别人编写的命令行程序到本地使用、允许用户将自己编写的包或命令行程序上传到 NPM 服务器供别人使用。</p>
 <p>以下的操作系统都已 window 的为主，且主要介绍一些我觉得有意思的东西，如简化命令，package.json 里的属性作用等，还有 npm 周边的辅助工具 npx 与 nrm,</p>
@@ -269,10 +271,10 @@ package-lock.json 的作用是锁定依赖安装结构，如果查看这个 json
 }
 </code></pre><p>package-lock 其主要字段是 version, resolved, integrity, requires, dependencies 这几个字段而已。
 version, integrity, resolved 用来记录包的准确版本号、内容 hash、安装源的，决定了要安装的包的准确“身份”信息。</p>
-<p>从 dependencies: {} 里的内容我们会发现，整个文件的 JSON 配置里的 dependencies 层次结构与文件系统中 node_modules 的文件夹层次结构是完全对照的，除最外层的 requires 属性为 true 以外, 其他层的 requires 属性都对应着这个包的 package.json 里记录的自己的依赖项 dependencies 属性，而 dependencies 对应既这个包里 node_modules 所拥有的文件。
-如图:
-<img src="npm%E4%B8%8Enpx/node_module.png" alt="node">
-因为这个文件记录了 node_modules 里所有包的结构、层级和版本号甚至安装源，它也就事实上提供了 “保存” node_modules 状态的能力。只要有这样一个 lock 文件，不管在那一台机器上执行 npm install 都会得到完全相同的 node_modules 结果。</p>
+<p>从 dependencies: {} 里的内容我们会发现，整个文件的 JSON 配置里的 dependencies 层次结构与文件系统中 node_modules 的文件夹层次结构是完全对照的，除最外层的 requires 属性为 true 以外, 其他层的 requires 属性都对应着这个包的 package.json 里记录的自己的依赖项 dependencies 属性，而 dependencies 对应既这个包里 node_modules 所拥有的文件。</p>
+<p>如图:</p>
+<p><img src="npm%E4%B8%8Enpx/node_module.png" alt="node"></p>
+<p>因为这个文件记录了 node_modules 里所有包的结构、层级和版本号甚至安装源，它也就事实上提供了 “保存” node_modules 状态的能力。只要有这样一个 lock 文件，不管在那一台机器上执行 npm install 都会得到完全相同的 node_modules 结果。</p>
 <p>package-lock 文件致力于优化的场景:
 在从前仅仅用 package.json 记录依赖，由于 包依赖的版本范围的机制；一个月前由 A 生成的 package.json 文件，B 在一个月后根据它执行 npm install 所得到的 node_modules 结果很可能许多包都存在不同的差异，虽然这个机制的限制使得同一份 package.json 不会得到大版本不同的依赖包，但同一份代码在不同环境安装出不同的依赖包，依然是可能导致意外的潜在因素。</p>
 <p>而禁止它在.npmrc 设置或命令设置</p>
@@ -402,8 +404,8 @@ nrm home [name]　　// 跳转到指定源的官网
 
     </div>
     <div class="nav-bar">
-      <ul><li><a href="##toc21">tags: npm</a></li>
-<li><a href="##toc22">前言</a></li>
+      <ul><li><a href="##toc11">npm、nrm 与 npx</a></li>
+<ul><li><a href="##toc22">前言</a></li>
 <li><a href="##toc23">npm</a></li>
 <ul><li><a href="##toc34">npm 安装与初始化</a></li>
 <li><a href="##toc35">依赖包安装</a></li>
@@ -417,6 +419,7 @@ nrm home [name]　　// 跳转到指定源的官网
 </ul>
 <li><a href="##toc212">npx</a></li>
 <li><a href="##toc213">nrm</a></li>
+</ul>
 </ul>
 
     </div>  

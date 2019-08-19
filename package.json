@@ -43,7 +43,7 @@
     "through2": "^3.0.1"
   },
   "customParams": {
-    "theme": "markdown",
+    "theme": "markdown4",
     "packageDir": "dist"
   },
   "repository": {
