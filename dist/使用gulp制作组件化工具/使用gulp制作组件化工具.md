@@ -11,7 +11,7 @@
 ### webpack
 
 WebPack 是一种模块化的解决方案。
-Webpack 的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack 将从这个文件开始找到你的项目的所有依赖文件，使用 loaders 处理它们，最后打包为一个浏览器可识别的 JavaScript 文件，但为了更加完美兼容，打包文件里添加了很多代码使文件的可读性很差。
+Webpack 的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack 将从这个文件开始找到你的项目的所有依赖文件，使用 loaders 处理它们，最后打包为浏览器可识别的 JavaScript 文件，但没有抽离公共 js 的情况下都打包到一个 js 文件，但为了更加完美兼容，打包文件里添加了很多代码使文件的可读性很差。
 
 webpack 兼容性等完善，在应用上开发很适合。
 
@@ -24,7 +24,7 @@ rollup 的功能与 webpack 类似，rollup 相对 webpack 而言，要小巧、
 
 ### gulp
 
-Gulp 侧重于前端开发的整个过程的控制管理（像是流水线），我们可以通过给 gulp 配置不同的 task（通过 Gulp 中的 gulp.task()方法配置，比如启动 server、sass/less 预编译、文件的合并压缩等等）来让 gulp 实现不同的功能，从而构建整个前端开发流程。
+Gulp 侧重于前端开发的整个过程的控制管理（像是流水线），除非使用插件实现合并操作，而我们可以通过给 gulp 配置不同的 task（通过 Gulp 中的 gulp.task()方法配置，比如启动 server、sass/less 预编译、文件的合并压缩等等）来让 gulp 实现不同的功能，从而构建整个前端开发流程，而 gulp 的 API 简单且少，学习成本很低，基本可以说会使用 node 就可以了。
 
 而 gulp 不会根据文件的引入别的文件而把引入文件也打包了，它只会根据当前文件打包，而代码合并之类的都需要自己实现 task 来实现。
 所以在打包多文件时会简单很多且自由度高，因为 gulp 以文件流的形式输入输出，可以对此进行一些操作来实现添加一些逻辑达到某些需要的目标，而 webpack 在这方面就复杂很多，需要自己实现插件来完成某些特殊要求。
@@ -42,7 +42,18 @@ Gulp 侧重于前端开发的整个过程的控制管理（像是流水线），
 
 实现起来简单且符合以上条件，webpack 不符合，rollup 勉强符合，但实现多文件与排除第三方等需要多次执行 rollup 配置，遍历的执行，重复执行很多没有必要的重复内容等等，gulp 对多文件打包友好，且可操作流程内容。
 
-gulp 适合。
+gulp 适合，当然也可以别的,如 typescript 或 babel 的命令行工具之类的，但这样如果需要操作文件里的一些信息还要自己写 node 实现一些额外的功能，如遍历目录、过滤、写入某些内容之类等等。
+
+如 babel:
+
+```
+npm install --save-dev @babel/core @babel/cli
+// 编译整个 src 目录下的文件并输出到 lib 目录
+npx babel src --out-dir lib
+```
+
+[babel 命令行工具资料](https://www.babeljs.cn/docs/babel-cli)
+以下的以 gulp 为准。
 
 ## gulp 实现打包
 
@@ -257,19 +268,3 @@ npm install --save-dev rzzc-tool
 ```
 
 [具体代码查看 github](https://github.com/793338023/npm-rzzc-tool)
-
-![三次握手](认识TCP/三次握手.png)
-
-```mermaid
-sequenceDiagram
-　　　participant Alice
-　　　participant Bob
-　　　Alice->John:Hello John, how are you?
-　　　loop Healthcheck
-　　　　　John->John:Fight against hypochondria
-　　　end
-　　　Note right of John:Rational thoughts <br/>prevail...
-　　　John-->Alice:Great!
-　　　John->Bob: How about you?
-　　　Bob-->John: Jolly good!
-```
