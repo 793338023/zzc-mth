@@ -1,0 +1,333 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>react的hooks</title>
+      <!-- inject:FileContent:css --><style>@charset "utf-8";
+
+/**
+ * markdown.css
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://gnu.org/licenses/lgpl.txt.
+ *
+ * @project      Weblog and Open Source Projects of Florian Wolters
+ * @version      GIT: $Id$
+ * @package      xhtml-css
+ * @author       Florian Wolters <florian.wolters.85@googlemail.com>
+ * @copyright    2012 Florian Wolters
+ * @cssdoc       version 1.0-pre
+ * @license      http://gnu.org/licenses/lgpl.txt GNU Lesser General Public License
+ * @link         http://github.com/FlorianWolters/jekyll-bootstrap-theme
+ * @media        all
+ * @valid        true
+ */
+
+body {
+    font-family: Helvetica, Arial, Freesans, clean, sans-serif;
+padding:1em;
+margin:auto;
+max-width:42em;
+background:#fefefe;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+h1 {
+    color: #000000;
+    font-size: 28px;
+}
+
+h2 {
+    border-bottom: 1px solid #CCCCCC;
+    color: #000000;
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+h4 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
+h6 {
+    color: #777777;
+    background-color: inherit;
+    font-size: 14px;
+}
+
+hr {
+    height: 0.2em;
+    border: 0;
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+}
+
+p, blockquote, ul, ol, dl, li, table, pre {
+    margin: 15px 0;
+}
+
+code, pre {
+    border-radius: 3px;
+    background-color: #F8F8F8;
+    color: inherit;
+}
+
+code {
+    border: 1px solid #EAEAEA;
+    margin: 0 2px;
+    padding: 0 5px;
+}
+
+pre {
+    border: 1px solid #CCCCCC;
+    line-height: 1.25em;
+    overflow: auto;
+    padding: 6px 10px;
+}
+
+pre > code {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+a, a:visited {
+    color: #4183C4;
+    background-color: inherit;
+    text-decoration: none;
+}
+</style><style>.body {
+  display: flex;
+  width: 80%;
+  min-width: 800px;
+  max-width: none;
+}
+.content {
+  flex: 1;
+}
+.nav-bar {
+}
+.nav-bar ul {
+  margin-top: 0;
+}
+.nav-bar > ul {
+  display: block;
+  position: sticky;
+  top: 0;
+  margin-top: 150px;
+}
+</style><style>.body {
+  display: flex;
+  width: 80%;
+  min-width: 800px;
+  max-width: none;
+}
+.content {
+  flex: 1;
+}
+.nav-bar {
+}
+.nav-bar ul {
+  margin-top: 0;
+}
+.nav-bar > ul {
+  display: block;
+  position: sticky;
+  top: 0;
+  margin-top: 150px;
+}
+</style><!-- endinject -->
+      <!-- inject:FileContent:js --><!-- endinject -->
+    </head>
+    <body class="body">
+    <div class="content">
+      <a id=#toc21 class="anchor-fix"></a><h2>前言</h2>
+<p>虽然 react 一般都是 class 类的方式编写，但有时为了简单，就使用函数编写，但在以前这是无副作用的函数,所以很多事都无法去做，比如后期为了维护而不得不在函数里使用 state 等时，这就不会符合无副作用的函数了，所以 react 会报错，而这是使用 hooks 就可以拯救啦，当然也有喜欢使用函数式编写的人来说也是福音，因为 hooks 基本上支持所有 react 生命周期，state,redux 等等，与编写 class 方式差不多等效了。</p>
+<a id=#toc22 class="anchor-fix"></a><h2>State</h2>
+<p>引入 react 里的 useState。
+useState 的参数就像 state 初始化值。
+useState 返回的值一个数组，数组中第一个参数是以前的 state,第二个参数是 setState，由于是参数，所以可以自己命名，不用想以前就 state,setState 这样。</p>
+<p>例子如下:</p>
+<pre><code>import React, { Component, useState, useEffect } from &#39;react&#39;;
+import { InputItem, List } from &#39;antd-mobile&#39;;
+
+export const getText = function(props){
+    const [test, setTest] = useState(&#39;&#39;);
+    function onChange(val){
+        setTest(val);
+    }
+
+    return (
+        &lt;div&gt;
+            &lt;List&gt;
+               &lt;InputItem value={test} onChange={onChange}&gt;hooks测试&lt;/InputItem&gt;
+            &lt;/List&gt;
+            &lt;List&gt;
+               &lt;div&gt;{test}&lt;/div&gt;
+            &lt;/List&gt;
+        &lt;/div&gt;
+    );
+}</code></pre><a id=#toc23 class="anchor-fix"></a><h2>Effect</h2>
+<p>引入 react 里的 Effect。
+useEffect 增加了从功能组件执行副作用的功能，其实这个钩子就是让函数支持 react 生命周期。
+它的目的是作为 componentDidMount，componentDidUpdate 以及 componentWillUnmount，只是都在这个 useEffect 钩子实现。</p>
+<ol>
+<li>useEffect 的第二参数为空数组[],效果如 componentDidMount:</li>
+</ol>
+<pre><code>import React, { Component, useState, useEffect } from &#39;react&#39;;
+import { InputItem, List } from &#39;antd-mobile&#39;;
+
+
+export const getText = function(props){
+
+    // 调用父级组件函数更新state
+    useEffect(()=&gt;{
+        props.setVal(Math.floor(Math.random()*100));
+    },[]);
+
+    return (
+        &lt;div&gt;
+            &lt;List&gt;
+               &lt;div&gt;{props.value}&lt;/div&gt;
+            &lt;/List&gt;
+        &lt;/div&gt;
+    );
+}</code></pre><ol start="2">
+<li>useEffect 的第二参数不传，效果如 componentDidUpdate,但初始加载也会触发:</li>
+</ol>
+<pre><code>import React, { Component, useState, useEffect } from &#39;react&#39;;
+import { InputItem, List } from &#39;antd-mobile&#39;;
+
+
+export const getText = function(props){
+
+    // 调用父级组件函数更新state
+    useEffect(()=&gt;{
+        props.setVal(Math.floor(Math.random()*100));
+    });
+
+    return (
+        &lt;div&gt;
+            &lt;List&gt;
+               &lt;div&gt;{props.value}&lt;/div&gt;
+            &lt;/List&gt;
+        &lt;/div&gt;
+    );
+}</code></pre><ol start="3">
+<li>useEffect 里函数的返回值，效果如 componentWillUnmount,在组件卸载调用:</li>
+</ol>
+<pre><code>import React, { Component, useState, useEffect } from &#39;react&#39;;
+import { InputItem, List } from &#39;antd-mobile&#39;;
+
+
+export const getText = function(props){
+    const timer = setInterval(()=&gt;{
+        console.log(+new Date());
+    });
+    // 调用父级组件函数更新state
+    useEffect(()=&gt;{
+        props.setVal(Math.floor(Math.random()*100));
+        return ()=&gt;{
+            clearInterVal(timer);
+        }
+    });
+
+    return (
+        &lt;div&gt;
+            &lt;List&gt;
+               &lt;div&gt;{props.value}&lt;/div&gt;
+            &lt;/List&gt;
+        &lt;/div&gt;
+    );
+}</code></pre><ol start="4">
+<li>useEffect 的第二参数数组有对应的 state 或 props 值，只要当前值更新了才触发:</li>
+</ol>
+<pre><code>import React, { Component, useState, useEffect } from &#39;react&#39;;
+import { InputItem, List } from &#39;antd-mobile&#39;;
+
+
+export const getText = function(props){
+
+    // 调用父级组件函数更新state
+    useEffect(()=&gt;{
+        props.setVal(Math.floor(Math.random()*100));
+    },[props.value]);
+
+    return (
+        &lt;div&gt;
+            &lt;List&gt;
+               &lt;div&gt;{props.value}&lt;/div&gt;
+            &lt;/List&gt;
+        &lt;/div&gt;
+    );
+}</code></pre><a id=#toc24 class="anchor-fix"></a><h2>自定义钩子</h2>
+<p>就是抽取相同逻辑的部分封装成一个新的钩子，而钩子使用 hooks 的钩子封装实现，然后返回一个目标内容，如值。</p>
+<p>自定义钩子:</p>
+<pre><code>import React, { Component, useState, useEffect } from &#39;react&#39;;
+export const getHook = function(vId,props){
+    const [ssId, setSsId] = useState(&#39;&#39;);
+    useEffect(()=&gt;{
+        props.setVal(Math.floor(Math.random()*100));
+        setSsId(vId);
+    },[props.value]);
+
+    return ssId;
+}</code></pre><p>使用自定义钩子:</p>
+<pre><code>import React, { Component, useState, useEffect } from &#39;react&#39;;
+import { InputItem, List } from &#39;antd-mobile&#39;;
+improt {getHook} from &#39;./hooks&#39;;
+
+export const getText = function(props){
+    const nVal = getHook(&quot;xx&quot;,props);
+
+    return (
+        &lt;div&gt;
+            &lt;List&gt;
+               &lt;div&gt;{props.value}&lt;/div&gt;
+            &lt;/List&gt;
+        &lt;/div&gt;
+    );
+}</code></pre><a id=#toc25 class="anchor-fix"></a><h2>使用规则</h2>
+<ol>
+<li>只能在顶层调用 Hooks。不要在循环，条件或嵌套函数中调用 Hook。</li>
+<li>只能在 functional component 中使用，所以如果在 class 使用一定要是组件的形式，而不是函数调用的方式，不是会当成一个在 class 里使用 hooks。</li>
+</ol>
+<a id=#toc26 class="anchor-fix"></a><h2>参考</h2>
+<p>react 官网有很详细的资料,而且以上的只是当用的，Hooks 还提供了别的钩子。
+<a href="https://reactjs.org/docs/hooks-custom.html">react 官方 Hooks</a></p>
+
+    </div>
+    <div class="nav-bar">
+      <ul><li><a href="##toc21">前言</a></li>
+<li><a href="##toc22">State</a></li>
+<li><a href="##toc23">Effect</a></li>
+<li><a href="##toc24">自定义钩子</a></li>
+<li><a href="##toc25">使用规则</a></li>
+<li><a href="##toc26">参考</a></li>
+</ul>
+
+    </div>  
+    </body>
+  </html>
+  

@@ -1,0 +1,307 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>redux运用</title>
+      <!-- inject:FileContent:css --><style>@charset "utf-8";
+
+/**
+ * markdown.css
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://gnu.org/licenses/lgpl.txt.
+ *
+ * @project      Weblog and Open Source Projects of Florian Wolters
+ * @version      GIT: $Id$
+ * @package      xhtml-css
+ * @author       Florian Wolters <florian.wolters.85@googlemail.com>
+ * @copyright    2012 Florian Wolters
+ * @cssdoc       version 1.0-pre
+ * @license      http://gnu.org/licenses/lgpl.txt GNU Lesser General Public License
+ * @link         http://github.com/FlorianWolters/jekyll-bootstrap-theme
+ * @media        all
+ * @valid        true
+ */
+
+body {
+    font-family: Helvetica, Arial, Freesans, clean, sans-serif;
+padding:1em;
+margin:auto;
+max-width:42em;
+background:#fefefe;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+h1 {
+    color: #000000;
+    font-size: 28px;
+}
+
+h2 {
+    border-bottom: 1px solid #CCCCCC;
+    color: #000000;
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+h4 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
+h6 {
+    color: #777777;
+    background-color: inherit;
+    font-size: 14px;
+}
+
+hr {
+    height: 0.2em;
+    border: 0;
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+}
+
+p, blockquote, ul, ol, dl, li, table, pre {
+    margin: 15px 0;
+}
+
+code, pre {
+    border-radius: 3px;
+    background-color: #F8F8F8;
+    color: inherit;
+}
+
+code {
+    border: 1px solid #EAEAEA;
+    margin: 0 2px;
+    padding: 0 5px;
+}
+
+pre {
+    border: 1px solid #CCCCCC;
+    line-height: 1.25em;
+    overflow: auto;
+    padding: 6px 10px;
+}
+
+pre > code {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+a, a:visited {
+    color: #4183C4;
+    background-color: inherit;
+    text-decoration: none;
+}
+</style><style>.body {
+  display: flex;
+  width: 80%;
+  min-width: 800px;
+  max-width: none;
+}
+.content {
+  flex: 1;
+}
+.nav-bar {
+}
+.nav-bar ul {
+  margin-top: 0;
+}
+.nav-bar > ul {
+  display: block;
+  position: sticky;
+  top: 0;
+  margin-top: 150px;
+}
+</style><style>.body {
+  display: flex;
+  width: 80%;
+  min-width: 800px;
+  max-width: none;
+}
+.content {
+  flex: 1;
+}
+.nav-bar {
+}
+.nav-bar ul {
+  margin-top: 0;
+}
+.nav-bar > ul {
+  display: block;
+  position: sticky;
+  top: 0;
+  margin-top: 150px;
+}
+</style><!-- endinject -->
+      <!-- inject:FileContent:js --><!-- endinject -->
+    </head>
+    <body class="body">
+    <div class="content">
+      <a id=#toc21 class="anchor-fix"></a><h2>redux 的概念</h2>
+<p>Redux 是 Flux 的另一种实现，也可以说进步，在以前基本都是使用 MVC 开发模式，然而这个模式没有限制住广大开发者们，因为他只是一个开发模式，没有边界限制，只能自己按照 MVC 的开发模式规范去做，至于是否真的按照规范做，这就不能约束了，所以会出现 M 与 V 直接对话，而没有让 C 起到作用，或者一些别的，使得 MVC 模式下开发混乱，还有就是 Model 和 View 之间缠绕着蜘蛛网一样复杂的依赖关系，让人难以维护。
+而 Redux 出现可以说把这个模式加上了约束条件，不让开发者为了方便跳过 C 等操作，一定遵循 Action-&gt;Dispatcher-&gt;Store-&gt;view-&gt;Action，这个流程循环执行。</p>
+<p>Dispatcher:处理动作分发，维持 Store 之间的依赖关系；
+Store:负责存储数据和处理数据相关逻辑；
+Action:驱动 Dispatcher 的 JavaScript 对象；
+View:视图部分，负责显示用户界面。</p>
+<p>如果把 redux 和 MVC 做一个结构对比，那么，redux 的 Dispatcher 相当于 MVC 的 Controller,redux 的 Store 相当于 MVC 的 Model,redux 的 View 是 react 组件 对应 MVC 的 View 了，至于多出来的这个 Action，可以理解为对应给 MVC 框架的用户请求。</p>
+<a id=#toc32 class="anchor-fix"></a><h3>Redux 的基本原则</h3>
+<pre><code class="language-bash">1、唯一数据源
+2、保持状态只读
+3、数据改变只能通过纯函数完成
+</code></pre>
+<a id=#toc43 class="anchor-fix"></a><h4>唯一数据源</h4>
+<p>唯一数据源指的是应用的状态数据应该只存储在唯一的一个 Store 上。
+虽然我们经常会按功能把 store 分成多个文件进行管理，但最后我们还是会把 store 合并成一个 Store。</p>
+<a id=#toc44 class="anchor-fix"></a><h4>保持状态只读</h4>
+<p>保持状态只读，就是说不能去直接修改状态，要修改 Store 的状态，必须要通过派发一个 action 对象完成。</p>
+<a id=#toc45 class="anchor-fix"></a><h4>数据改变只能通过纯函数完成</h4>
+<p>这里所说的纯函数就是 Reducer，reducer(state , action)
+第一个参数 state 是当前的状态，第二个参数 action 是接收到的 action 对象，而 reducer 函数要做的事情，就是根据 state 和 action 的值产生一个新的对象返回，注意 reducer 必须是纯函数，也就是说函数的返回结果必须完全由参数 state 和 action 决定，而且不产生任何副作用，也不能修改参数 state 和 action 对象。</p>
+<a id=#toc26 class="anchor-fix"></a><h2>react-redux</h2>
+<p>由于 redux 可以通用其他的地方，所以它的灵活性高，使用中间件连接 react 与 redux,免除一些配置，如 react-redux 最主要的两个功能是 connect 与 Provider。</p>
+<a id=#toc37 class="anchor-fix"></a><h3>connect</h3>
+<p>connect 有两个参数 mapStateToProps、mapDispatchToProps，就是把 redux 的 Store 变成组件的 props 与把 action 方法变成组件的 props，方便组件内部调用。
+connect 的实现就是给组件嵌套一层容器组件，然后让容器组件向内部的组件传递 props，既容器组件与傻瓜组件的概念。</p>
+<p>mapStateToProps、mapDispatchToProps 函数都接受两个参数，第二参数都是为自身拥有的 props，mapStateToProps 第一个参数为 Store，返回的对象为转化为 props 的值，mapDispatchToProps 第一参数为 dispatch 派发器，既 action 怎么触发派发函数，而 mapDispatchToProps 可以直接为一个字面量对象，那么就可以把 action 包装为一个派发函数，只要触发它即可。</p>
+<pre><code class="language-bash">import React, { Component } from &#39;react&#39;;
+import { Link } from &#39;react-router-dom&#39;;
+import {connect} from &#39;react-redux&#39;;
+import {setItem, setItemContent} from &#39;../../redux/itemReduce&#39;;
+
+import ItemOne from &#39;../ItemOne/&#39;;
+
+class Item extends Component {
+  constructor(props){
+    super(props);
+    this.state = {};
+    this.setName = this.setName.bind(this);
+  }
+  componentDidMount(){
+    console.log(this.props);
+  }
+  setName(ev){
+    let val = ev.target.value;
+    // 触发action
+    this.props.setItem({itemName: val});
+  }
+  render() {
+    return (
+      &lt;div className=&#39;item&#39;&gt;
+        &lt;p&gt;item 欢迎光临&lt;/p&gt;
+        &lt;Link to=&#39;/&#39;&gt;跳转home&lt;/Link&gt;
+        &lt;input type=&#39;text&#39; onInput={this.setName}/&gt;
+        &lt;div&gt;
+          &lt;ItemOne /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+const mapStateToProps = state=&gt;{
+  return state.itemRedux;
+}
+
+// setItem,setItemContent是action方法
+const mapDispatchToProps = {setItem, setItemContent};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Item);
+
+</code></pre>
+<a id=#toc38 class="anchor-fix"></a><h3>Provider</h3>
+<p>Provider 组件，可以让容器组件拿到 state。
+Provider 在根组件一般在根组件的上一层包着，App 的所有子组件就默认都可以拿到 state 了。
+而它的原理就是使用 context，store 放在了上下文对象 context 上面,然后，子组件就可以从 context 拿到 store。</p>
+<pre><code class="language-bash">// react-redux、redux-thunk、redux配合使用的写法基本是固定的，除非有特殊要求
+
+import React from &#39;react&#39;;
+import ReactDOM from &#39;react-dom&#39;;
+import &#39;./index.css&#39;;
+import * as serviceWorker from &#39;./serviceWorker&#39;;
+
+import router from &#39;./router.js&#39;;
+
+import {createStore, applyMiddleware, compose} from &#39;redux&#39;
+import thunk from &#39;redux-thunk&#39;
+import { Provider } from &#39;react-redux&#39;
+import reducers from &#39;./reduces&#39;
+
+// compose是增强store的，如浏览器插件redux监听store数据，添加中间件，如redux-thunk解决异步问题
+
+const store = createStore(reducers, compose(applyMiddleware(thunk),
+    window.devToolsExtension?window.devToolsExtension():f=&gt;f))
+
+ReactDOM.render(
+    &lt;Provider store={store}&gt;
+        {router()}
+    &lt;/Provider&gt;
+, document.getElementById(&#39;root&#39;));
+
+serviceWorker.unregister();
+</code></pre>
+<p>由于 Store 只有一个，如果数据冗余，那么会很占内存且结构复杂，而宁愿牺牲一些性能，进行一些运算达到获取目标结果，也比存储起来好。
+还有数据的扁平化，由于使用 Store 把数据嵌套过深，会让数据的修改与获取加大难度，这样最好是数据的扁平化，那么就可以减少没有必要的非空判断，默认赋值之类的操作。</p>
+<pre><code class="language-bash">// 若嵌套深时获取数据
+const d = state.A &amp;&amp; state.A.B &amp;&amp; state.A.B.C &amp;&amp; state.A.B.C.D ;
+
+//而扁平化
+const d = state.A;</code></pre>
+<p>而 redux 的 Store 只有一个，但我们需要模块化的开发，那么就是需要把多个 Store 合并成一个，就要使用 combineReducers。</p>
+<pre><code class="language-bash">import {combineReducers} from &#39;redux&#39;;
+
+import {home} from &#39;./redux/homeReduce&#39;;
+import {item} from &#39;./redux/itemReduce&#39;;
+
+let comReduces = {
+    homeRedux: home,
+    itemRedux: item
+};
+
+export default combineReducers(comReduces);</code></pre>
+<p>而合并后 Store 的对应模块的键值为对象的键值，如 homeRedux 下 Store，为 homeRedux。</p>
+
+    </div>
+    <div class="nav-bar">
+      <ul><li><a href="##toc21">redux 的概念</a></li>
+<ul><li><a href="##toc32">Redux 的基本原则</a></li>
+<ul><li><a href="##toc43">唯一数据源</a></li>
+<li><a href="##toc44">保持状态只读</a></li>
+<li><a href="##toc45">数据改变只能通过纯函数完成</a></li>
+</ul>
+</ul>
+<li><a href="##toc26">react-redux</a></li>
+<ul><li><a href="##toc37">connect</a></li>
+<li><a href="##toc38">Provider</a></li>
+</ul>
+</ul>
+
+    </div>  
+    </body>
+  </html>
+  
