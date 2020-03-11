@@ -1,0 +1,226 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>npm-install的坑</title>
+      <!-- inject:FileContent:css --><style>@charset "utf-8";
+
+/**
+ * markdown.css
+ *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://gnu.org/licenses/lgpl.txt.
+ *
+ * @project      Weblog and Open Source Projects of Florian Wolters
+ * @version      GIT: $Id$
+ * @package      xhtml-css
+ * @author       Florian Wolters <florian.wolters.85@googlemail.com>
+ * @copyright    2012 Florian Wolters
+ * @cssdoc       version 1.0-pre
+ * @license      http://gnu.org/licenses/lgpl.txt GNU Lesser General Public License
+ * @link         http://github.com/FlorianWolters/jekyll-bootstrap-theme
+ * @media        all
+ * @valid        true
+ */
+
+body {
+    font-family: Helvetica, Arial, Freesans, clean, sans-serif;
+padding:1em;
+margin:auto;
+max-width:42em;
+background:#fefefe;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+h1 {
+    color: #000000;
+    font-size: 28px;
+}
+
+h2 {
+    border-bottom: 1px solid #CCCCCC;
+    color: #000000;
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+h4 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
+h6 {
+    color: #777777;
+    background-color: inherit;
+    font-size: 14px;
+}
+
+hr {
+    height: 0.2em;
+    border: 0;
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+}
+
+p, blockquote, ul, ol, dl, li, table, pre {
+    margin: 15px 0;
+}
+
+code, pre {
+    border-radius: 3px;
+    background-color: #F8F8F8;
+    color: inherit;
+}
+
+code {
+    border: 1px solid #EAEAEA;
+    margin: 0 2px;
+    padding: 0 5px;
+}
+
+pre {
+    border: 1px solid #CCCCCC;
+    line-height: 1.25em;
+    overflow: auto;
+    padding: 6px 10px;
+}
+
+pre > code {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+a, a:visited {
+    color: #4183C4;
+    background-color: inherit;
+    text-decoration: none;
+}
+</style><style>.body {
+  display: flex;
+  width: 80%;
+  min-width: 800px;
+  max-width: none;
+}
+.content {
+  flex: 1;
+}
+.nav-bar {
+}
+.nav-bar ul {
+  margin-top: 0;
+}
+.nav-bar > ul {
+  display: block;
+  position: sticky;
+  top: 0;
+  margin-top: 150px;
+}
+</style><style>.body {
+  display: flex;
+  width: 80%;
+  min-width: 800px;
+  max-width: none;
+}
+.content {
+  flex: 1;
+}
+.nav-bar {
+}
+.nav-bar ul {
+  margin-top: 0;
+}
+.nav-bar > ul {
+  display: block;
+  position: sticky;
+  top: 0;
+  margin-top: 150px;
+}
+</style><!-- endinject -->
+      <!-- inject:FileContent:js --><!-- endinject -->
+    </head>
+    <body class="body">
+    <div class="content">
+      <hr>
+<p>title: npm install的坑
+date: 2020-03-08 20:42:58</p>
+<a id=#toc21 class="anchor-fix"></a><h2>tags: npm</h2>
+<a id=#toc22 class="anchor-fix"></a><h2>package</h2>
+<a id=#toc43 class="anchor-fix"></a><h4>package 有两种依赖</h4>
+<ol>
+<li>dependencies —— 运行依赖，依赖的项该是正常运行该包时所需要的依赖项，就是开发的项目需要的包，如 ui 框架包，react 包之类的。</li>
+<li>devDependencies —— 开发依赖，开发的时候需要的依赖项，像一些进行单元测试之类的包或 webpack 打包需要的包。</li>
+</ol>
+<a id=#toc44 class="anchor-fix"></a><h4>package 版本号详解</h4>
+<p>在 npm 中安装固定的版本号 package，只需要在其后加 <code>@</code>版本号</p>
+<pre><code>npm i babel-core@7.0.0 -S</code></pre><p>package.json 中库的版本号详解：</p>
+<ol>
+<li><p><code>~</code> 匹配最近的小版本依赖包，比如~7.0.0 会匹配所有 7.0.x 版本，但是不包括 7.1.0，如果 7.0.x 最新的版本是 7.0.8，那么就会安装这个版本</p>
+</li>
+<li><p><code>^</code> 匹配最新的大版本依赖包，比如^7.0.0 会匹配所有 7.x.x 的包，包括 7.9.0，但是不包括 8.0.0，如 7.x.x 最新的版本是 7.8.7，那么就会安装这个版本</p>
+</li>
+<li><p><code>*</code> 意味着安装最新版本的依赖包</p>
+</li>
+</ol>
+<a id=#toc45 class="anchor-fix"></a><h4>坑</h4>
+<p>由于在 package.json 中依赖包大部分都是一个范围的版本，如<code>babel:^7.0.0</code>，那么每个从仓库拉下来的开发者都会遵循装包规则，安装这个范围版本最新的，那么就导致一个现象就是你与同事的依赖包不一致，而你的包有 BUG，但你同事没有，而导致有时难以确认问题所在，或者公司自己搭建了 npm 私仓，但最近在 npm 仓库上有新的包更新，但公司的私仓没有同步到位，导致装包时找不到包，但由于这个包是依赖包的包，导致你也不能固定它的版本而导致你无法正常下载包的问题。</p>
+<p>解决方法:</p>
+<ol>
+<li>那么这些问题其实可以使用<code>package-lock.json</code>解决，因为它记录了整个 <code>node_modules</code> 文件夹的树状结构，甚至连模块的下载地址都记录了，<code>npm install</code>时会根据 <code>package-lock.json</code> 文件指定的结构来下载模块，并不会理会 <code>package.json</code> 文件，而它也提升了装包速度。</li>
+</ol>
+<p>但以后修改 <code>package.json</code> 文件相应模块的版本号，再执行 <code>npm install</code> 不会更新了，只能手动 <code>npm install name@version</code> 指定版本号来安装。</p>
+<ol start="2">
+<li>若项目里没有<code>package-lock.json</code>，那么我们可以使用 yarn 去解决，因为 yarn 出现就是为了解决 npm 的一些缺陷，它与 npm 功能类似而且完全兼容，在项目中可以切换使用，它们都是一个对包操作的工具而已，而 yarn 对某些不存在的包版本但这个版本范围之类还是有包存在的会出现询问交互操作，那么我们就可以选定某个版本，而 npm 就不行，当版本不存在，它就会报错，让人无法安装包，然后 yarn 生成 yarn.lock，这个和<code>package.json</code>一样的，最早时 yarn 实现的，为了版本一致，提升速度。</li>
+</ol>
+<pre><code>yarn install --non-interactive
+
+禁用询问交互，比如当没有合适版本的依赖时
+</code></pre><pre><code>yarn install --flat
+
+安装所有依赖，但每个依赖只允许有一个版本存在。 第一次运行这个命令时，会提示你在每个依赖包的多个版本范围中选择一个版本。 这会被添加到你的 package.json 文件的 resolutions 字段。
+
+&quot;resolutions&quot;: {
+  &quot;package-a&quot;: &quot;2.0.0&quot;,
+  &quot;package-b&quot;: &quot;5.0.0&quot;,
+  &quot;package-c&quot;: &quot;1.5.2&quot;
+}</code></pre><pre><code>// 将准确地安装yarn.lock中的内容。不更新锁定
+yarn install --frozen-lockfile
+
+不生成 yarn.lock 锁文件，并且，如果需要更新则会报错。
+
+如果需要可重现的依赖环境（比如在持续集成系统中），应该传入 --frozen-lockfile 标志。</code></pre>
+    </div>
+    <div class="nav-bar">
+      <ul><li><a href="##toc21">tags: npm</a></li>
+<li><a href="##toc22">package</a></li>
+<ul><li><a href="##toc43">package 有两种依赖</a></li>
+<li><a href="##toc44">package 版本号详解</a></li>
+<li><a href="##toc45">坑</a></li>
+</ul>
+</ul>
+
+    </div>  
+    </body>
+  </html>
+  
